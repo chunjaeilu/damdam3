@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- 제이쿼리  -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- js -->
+    <script src="./js/achievement.js"></script>
+    <!-- css -->
+    <link rel="stylesheet" href="./css/achievement.css" />
+    <link rel="stylesheet" href="./css/reset.css" />
+    <title>업적</title>
+  </head>
+  <body id="achievement">
+    <div class="achiev_wrap">
+      <!-- 업적 제목 -->
+      <div class="achiev_title">
+        <div class="achiev_left_arrow">
+          <a href="/main"><img src="./images/achieve_1.png" alt="arrow" /></a>
+        </div>
+        <h1>업적</h1>
+        <div class="achiev_price">
+          <div class="achiev_price_img">
+            <img src="./images/achieve_2.png" alt="" />
+          </div>
+          <span class="achiev_score"><%= totalLength %></span><span>/</span
+          ><span><%= allLength %></span>
+        </div>
+      </div>
+      <!-- 업적 내용 -->
+      <div class="achiev_contents_wrap">
+        <div class="depth1">
+          <% for( let i = 0; i < test[0].Price.length; i++ ) { %>
+          <div class="depth2">
+            <% if(test[0].Price[i].date) { %>
+            <img class="checkBox" src="./images/checkBox.png" alt="checkBox" />
+            <% } %>
+            <div><img src="<%= test[0].Price[i].img %>" alt="Price" /></div>
+            <p><%= test[0].Price[i].content %></p>
+          </div>
+          <% } %> <% for( let i = 0; i < test[1].Day.length; i++ ) { %>
+          <div class="depth2">
+            <% if(test[1].Day[i].date) { %>
+            <img class="checkBox" src="./images/checkBox.png" alt="checkBox" />
+            <% } %>
+            <div><img src="<%= test[1].Day[i].img %>" alt="Day" /></div>
+            <p><%= test[1].Day[i].content %></p>
+          </div>
+          <% } %> <% for( let i = 0; i < test[2].Count.length; i++ ) { %>
+          <div class="depth2">
+            <% if(test[2].Count[i].date) { %>
+            <img class="checkBox" src="./images/checkBox.png" alt="checkBox" />
+            <% } %>
+            <div><img src="<%= test[2].Count[i].img %>" alt="Count" /></div>
+            <p><%= test[2].Count[i].content %></p>
+          </div>
+          <% } %>
+        </div>
+      </div>
+    </div>
+    <footer>
+      <div class="home">
+        <a href="/"><i class="fa-solid fa-house"></i></a>
+      </div>
+      <div class="achievement active">
+        <a href="/achievement"><i class="fa-solid fa-trophy"></i></a>
+      </div>
+      <div class="community">
+        <a href="/community"><i class="fa-solid fa-user-group"></i></a>
+      </div>
+      <div class="calendar">
+        <a href="/calendar"><i class="fa-solid fa-calendar-days"></i></a>
+      </div>
+    </footer>
+    <!-- fontA -->
+    <script
+      src="https://kit.fontawesome.com/67eff22c15.js"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
