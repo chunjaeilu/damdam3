@@ -70,7 +70,7 @@ app.get("/", function (req, res) {
 
 // ----------UserName----------
 app.get("/UserName", (req, res) => {
-  res.render("pages/userName.ejs");
+  res.render("pages/username.ejs");
 });
 // ----------InpuUserNameData----------
 app.post("/UserNameData", (req, res) => {
