@@ -90,7 +90,7 @@ app.post("/UserNameData", (req, res) => {
   userArr = filterArr;
 
   fs.writeFileSync("userData.json", JSON.stringify(userArr));
-  res.redirect("/noMoreInfo");
+  res.redirect("/NoMoreInfo");
 });
 
 // ----------StartDate----------
@@ -287,7 +287,7 @@ app.get("/main", (req, res) => {
 // ----------NoMoreInfo----------
 // 사용자 정보를 이름만 입력했을 때 보여줄 페이지
 app.get("/NoMoreInfo", (req, res) => {
-  res.render("pages/noMoreInfo.ejs", { userArr, knowledge104 });
+  res.render("pages/NoMoreInfo.ejs", { userArr, knowledge104 });
 });
 
 // ----------stage----------
