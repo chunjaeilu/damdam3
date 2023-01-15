@@ -15,17 +15,18 @@
         </a>
         <h1 class="userinfo-title-main">내 정보</h1>
       </div>
-      <form action="/delete" method="post">
+      <form action="/update" method="post" enctype="multipart/form-data">
         <div class="inputbox-name">
           <input
-          class="imgUp"
+            class="imgUp"
             type="file"
             accept="image/*"
             multiple
             style="display: none"
-            name="img"
+            name="image"
+            onchange="readURL(this)"
           />
-          <img class="userImg" src="/images/mdi_user.png" alt="기본사진" />
+          <img class="userImg" src="/images/mdi_user.png" alt="프로필" />
           <input
             type="text"
             value="<%= userArr[0].userName %>"
@@ -202,8 +203,8 @@
             <p>분</p>
           </div>
         </div>
-        <!-- inputbox-end -->
-
+        <div>
+          <!-- inputbox-end -->
           <button class="input-userinfo-button" type="submit" name="delete">
             수정
           </button>
@@ -231,11 +232,32 @@
       src="https://kit.fontawesome.com/67eff22c15.js"
       crossorigin="anonymous"
     ></script>
+
     <script>
-       const upload = document.querySelector(".userImg");
+      const upload = document.querySelector(".userImg");
       const realUpload = document.querySelector(".imgUp");
       upload.addEventListener("click", () => realUpload.click());
+
+      function readURL(input) {
+        if (input.files && input.files[0]) {
+          var reader = new FileReader();
+          console.log(reader);
+          reader.onload = function (e) {
+            upload.src = e.target.result;
+          };
+
+          reader.readAsDataURL(input.files[0]);
+        } else {
+          document.querySelector("userImg").src = "/images/mdi_user.png";
+        }
+      }
+      
+      let src = "<%= userArr[0].img %>";
+      if (src) {
+        upload.setAttribute("src", `/images/${src}`);
+      } else {
+        upload.setAttribute("src", "/images/mdi_user.png");
+      }
     </script>
   </body>
-  
 </html>

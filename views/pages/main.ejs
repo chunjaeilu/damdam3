@@ -72,32 +72,29 @@
         </div>
         <div class="achievement-contents">
           <% let randomPrice = Math.floor(Math.random()*testPriceArr.length); %>
-          <div class="achievement-content">
-            <div class="achievement-content-img">
-              <img src="<%= testPriceArr[randomPrice].img %>" alt="trophy1" />
-            </div>
-            <div class="achievement-content-text">
-              <%= testPriceArr[randomPrice].content %>
-            </div>
+          <% let randomDay = Math.floor(Math.random()*testDayArr.length); %> 
+          <% let randomCount = Math.floor(Math.random()*testCountArr.length); %> 
+          <% if(testPriceArr.length>0) { %>
+            <div class="achievement-content">
+              <img src="<%= testPriceArr[randomPrice].img %>" alt="01">
+              <div class="achievement-content-text"><%= testPriceArr[randomPrice].content %></div>
+            </p>
           </div>
-          <% let randomDay = Math.floor(Math.random()*testDayArr.length); %>
-          <div class="achievement-content">
-            <div class="achievement-content-img">
-              <img src="<%= testDayArr[randomDay].img %>" alt="trophy2" />
-            </div>
-            <div class="achievement-content-text">
-              <%= testDayArr[randomDay].content %>
-            </div>
+          <% } %>
+          <% if(testDayArr.length>0) { %>
+            <div class="achievement-content">
+              <img src="<%= testDayArr[randomDay].img %>" alt="01">
+              <div class="achievement-content-text"><%= testDayArr[randomDay].content %></div>
+            </p>
           </div>
-          <% let randomCount = Math.floor(Math.random()*testCountArr.length); %>
-          <div class="achievement-content">
-            <div class="achievement-content-img">
-              <img src="<%= testCountArr[randomCount].img %>" alt="trophy3" />
-            </div>
-            <div class="achievement-content-text">
-              <%= testCountArr[randomCount].content %>
-            </div>
+          <% } %>
+          <% if(testCountArr.length>0) { %>
+            <div class="achievement-content">
+              <img src="<%= testCountArr[randomCount].img %>" alt="01">
+              <div class="achievement-content-text"><%= testCountArr[randomCount].content %></div>
+            </p>
           </div>
+          <% } %>
           <div class="achievement-content">
             <p>
               <a href="/achievement">모든<br />업적 보기</a>
@@ -161,11 +158,15 @@
         <div class="change-contents">
           <div class="prev">
             <div>
+              <% if((stageCount-1)== -1){ %>
+              <p>0 단계</p>
+              <% }  else { %>
               <p><%= stage[stageCount-1].stage %></p>
               <p>
                 <%= stage[stageCount-1].goal %> - <%=
                 stage[stageCount-1].stageTxt %>
               </p>
+              <% } %>
             </div>
           </div>
           <div class="arrow">
@@ -254,7 +255,7 @@
     <!-- footer -->
     <footer>
       <div class="home active">
-        <a href="/"><i class="fa-solid fa-house"></i></a>
+        <a href="/main"><i class="fa-solid fa-house"></i></a>
       </div>
       <div class="achievement">
         <a href="/achievement"><i class="fa-solid fa-trophy"></i></a>

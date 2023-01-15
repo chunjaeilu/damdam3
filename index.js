@@ -4,6 +4,21 @@ const app = express();
 const ejs = require("ejs");
 const fs = require("fs");
 
+// 이미지 추가
+const multer = require("multer");
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "./public/images"); // 저장 위치
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname); // 원래 이미지명으로 저장
+  },
+});
+const upload = multer({
+  storage: storage,
+});
+
 // ----------port----------
 const port = 3001;
 
@@ -70,7 +85,7 @@ app.get("/", function (req, res) {
 
 // ----------UserName----------
 app.get("/UserName", (req, res) => {
-  res.render("pages/username.ejs");
+  res.render("pages/UserName.ejs");
 });
 // ----------InpuUserNameData----------
 app.post("/UserNameData", (req, res) => {
@@ -95,7 +110,7 @@ app.post("/UserNameData", (req, res) => {
 
 // ----------StartDate----------
 app.get("/StartDate", (req, res) => {
-  res.render("pages/startDate.ejs");
+  res.render("pages/StartDate.ejs");
 });
 // ----------StartDate 입력----------
 app.post("/StartDateData", (req, res) => {
@@ -125,7 +140,7 @@ app.post("/StartDateData", (req, res) => {
 
 // ----------EndDate----------
 app.get("/EndDate", (req, res) => {
-  res.render("pages/endDate.ejs");
+  res.render("pages/EndDate.ejs");
 });
 // ----------EndDate 입력----------
 app.post("/EndDateData", (req, res) => {
@@ -155,7 +170,7 @@ app.post("/EndDateData", (req, res) => {
 
 // ----------CountPerDay----------
 app.get("/CountPerDay", (req, res) => {
-  res.render("pages/countPerDay.ejs");
+  res.render("pages/CountPerDay.ejs");
 });
 // ----------CountPerDay 입력----------
 app.post("/CountPerDayData", (req, res) => {
@@ -168,7 +183,7 @@ app.post("/CountPerDayData", (req, res) => {
 
 // ----------Price----------
 app.get("/Price", (req, res) => {
-  res.render("pages/price.ejs");
+  res.render("pages/Price.ejs");
 });
 // ----------Price 입력----------
 app.post("/PriceData", (req, res) => {
@@ -181,7 +196,7 @@ app.post("/PriceData", (req, res) => {
 
 // ----------BrithDay----------
 app.get("/BrithDay", (req, res) => {
-  res.render("pages/brithDay.ejs");
+  res.render("pages/BrithDay.ejs");
 });
 // ----------BrithDay 입력----------
 app.post("/BrithDayData", (req, res) => {
@@ -253,14 +268,20 @@ app.get("/main", (req, res) => {
   );
 
   // 조건 달성하면 달성 날짜 추가하기
-  if (testPriceArr.at(-1).date == undefined) {
-    testPriceArr.at(-1).date = `${nowY}-${nowM}-${nowD}`;
+  if (testPriceArr.length > 0) {
+    if (testPriceArr.at(-1).date == undefined) {
+      testPriceArr.at(-1).date = `${nowY}-${nowM}-${nowD}`;
+    }
   }
-  if (testDayArr.at(-1).date == undefined) {
-    testDayArr.at(-1).date = `${nowY}-${nowM}-${nowD}`;
+  if (testDayArr.length > 0) {
+    if (testDayArr.at(-1).date == undefined) {
+      testDayArr.at(-1).date = `${nowY}-${nowM}-${nowD}`;
+    }
   }
-  if (testCountArr.at(-1).date == undefined) {
-    testCountArr.at(-1).date = `${nowY}-${nowM}-${nowD}`;
+  if (testCountArr.length > 0) {
+    if (testCountArr.at(-1).date == undefined) {
+      testCountArr.at(-1).date = `${nowY}-${nowM}-${nowD}`;
+    }
   }
 
   // 업적 총 개수 구하기
@@ -366,14 +387,20 @@ app.get("/achievement", function (req, res) {
     return e.condition <= day * userArr[0].CountPerDay;
   });
 
-  if (testPriceArr.at(-1).date == undefined) {
-    testPriceArr.at(-1).date = `${nowY}-${nowM}-${nowD}`;
+  if (testPriceArr.length > 0) {
+    if (testPriceArr.at(-1).date == undefined) {
+      testPriceArr.at(-1).date = `${nowY}-${nowM}-${nowD}`;
+    }
   }
-  if (testDayArr.at(-1).date == undefined) {
-    testDayArr.at(-1).date = `${nowY}-${nowM}-${nowD}`;
+  if (testDayArr.length > 0) {
+    if (testDayArr.at(-1).date == undefined) {
+      testDayArr.at(-1).date = `${nowY}-${nowM}-${nowD}`;
+    }
   }
-  if (testCountArr.at(-1).date == undefined) {
-    testCountArr.at(-1).date = `${nowY}-${nowM}-${nowD}`;
+  if (testCountArr.length > 0) {
+    if (testCountArr.at(-1).date == undefined) {
+      testCountArr.at(-1).date = `${nowY}-${nowM}-${nowD}`;
+    }
   }
 
   let allLength = testPrice.length + testDay.length + testCount.length;
@@ -398,7 +425,7 @@ app.get("/title", function (req, res) {
   res.render("pages/title.ejs");
 });
 // ----------setting----------
-app.get("/setting", function (req, res) {
+app.get("/setting", async function (req, res) {
   res.render("pages/setting.ejs");
 });
 
@@ -424,8 +451,8 @@ app.post("/allReset", (req, res) => {
   res.redirect("/");
 });
 // ----------사용자 정보 수정----------
-app.post("/delete", function (req, res) {
-  const newData = {
+app.post("/update", upload.single("image"), function (req, res) {
+  newData = {
     userName: req.body.userName,
     BrithDayYear: req.body.BrithDayYear,
     BrithDayMonth: req.body.BrithDayMonth,
@@ -442,8 +469,9 @@ app.post("/delete", function (req, res) {
     EndDay: req.body.EndDay,
     EndHour: req.body.EndHour,
     EndMinute: req.body.EndMinute,
-    img: req.body.img,
+    img: req.file.filename,
   };
+
   userArr.splice(0, 1, newData);
   fs.writeFileSync("userData.json", JSON.stringify(userArr));
   res.redirect("/userinfo");

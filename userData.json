@@ -1,21 +1,20 @@
 [
   {
-    "userName": "김민수",
-    "id": 0,
-    "StartYear": "2000",
-    "StartMonth": "001",
-    "StartDay": "001",
-    "StartHour": "001",
-    "StartMinute": "001",
+    "userName": "원빈",
+    "BrithDayYear": "1984",
+    "BrithDayMonth": "11",
+    "BrithDayDay": "1",
+    "Price": "5000",
+    "CountPerDay": "12",
+    "StartYear": "2001",
+    "StartMonth": "1",
+    "StartDay": "1",
+    "StartHour": "1",
+    "StartMinute": "1",
     "EndYear": "2023",
-    "EndMonth": "01",
-    "EndDay": "01",
-    "EndHour": "14",
-    "EndMinute": "10",
-    "CountPerDay": "10",
-    "Price": "4500",
-    "BrithDayYear": "1900",
-    "BrithDayMonth": "001",
-    "BrithDayDay": "001"
+    "EndMonth": "1",
+    "EndDay": "15",
+    "EndHour": "1",
+    "EndMinute": "1"
   }
 ]
