@@ -46,18 +46,19 @@
           <div class="main-timer-day">
             <% let startDate = new
             Date(userArr[0].EndYear,userArr[0].EndMonth-1,userArr[0].EndDay,userArr[0].EndHour,userArr[0].EndMinute);
-            %> <% let nowDate = new Date; let currDay = 24 * 60 * 60 * 1000; let
-            diff = nowDate - startDate; let day = parseInt(diff/currDay) ; %>
+            %> <% let nowDate = new Date; let korea = new Date(nowDate.getFullYear(),nowDate.getMonth(),nowDate.getDate(),nowDate.getHours()+9,nowDate.getMinutes()); let currDay = 24 * 60 * 60 * 1000; let
+            diff = korea - startDate; let day = parseInt(diff/currDay) ; %>
             <%= day %>일
           </div>
+
           <div class="main-timer-clock">
             <div class="main-timer-hour">
               <% let hour = parseInt(diff/(1000 * 60 * 60)); let upH = hour -
-              day*24; if(upH <10) {upH = "0"+upH} %> <%= upH %>시간
+              day*24; if(upH <10) {upH = ""+upH} %> <%= upH %>시간
             </div>
             <div class="main-timer-minute">
               <% let minute = parseInt(diff/(1000 * 60)) %> <% let upM = minute
-              - day*24*60 - (hour - day*24)*60; if(upM <10){upM = "0" + upM} %>
+              - day*24*60 - (hour - day*24)*60; if(upM <10){upM = "" + upM} %>
               <%= upM %>분
             </div>
           </div>
@@ -116,14 +117,17 @@
             <div class="count-icon"><i class="fa-solid fa-smoking"></i></div>
             <div class="count-content">
               <h3>피우지 않은 담배 개수</h3>
-              <h1><%= userArr[0].CountPerDay * day %>개피</h1>
+              <h1><%= parseInt(userArr[0].CountPerDay * (hour/24)) %>개피</h1>
+
+              
+              
             </div>
           </div>
           <div class="save">
             <div class="save-icon"><i class="fa-solid fa-piggy-bank"></i></div>
             <div class="save-content">
               <h3>절약한 금액</h3>
-              <h1><%= userArr[0].Price * day %>원</h1>
+              <h1><%= parseInt(userArr[0].Price * (hour/24))  %>원</h1>
             </div>
           </div>
           <div class="time">
@@ -132,7 +136,7 @@
             </div>
             <div class="time-content">
               <h3>늘어난 시간</h3>
-              <h1><%= day*24*60 %>분</h1>
+              <h1><%= parseInt(minute/24)%>분</h1>
             </div>
           </div>
           <div class="contour"></div>
@@ -271,6 +275,13 @@
     <script
       src="https://kit.fontawesome.com/67eff22c15.js"
       crossorigin="anonymous"
-    ></script>
+    >
+    </script>
+    <script>
+      let userImage = document.querySelector(".info-setting .info a")
+      if("<%= userArr[0].img %>"){
+        userImage.innerHTML = `<img src="images/<%= userArr[0].img %>" alt="user" />`
+      }
+    </script>
   </body>
 </html>

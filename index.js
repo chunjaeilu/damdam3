@@ -4,21 +4,6 @@ const app = express();
 const ejs = require("ejs");
 const fs = require("fs");
 
-// 이미지 추가
-const multer = require("multer");
-
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "./public/images"); // 저장 위치
-  },
-  filename: function (req, file, cb) {
-    cb(null, file.originalname); // 원래 이미지명으로 저장
-  },
-});
-const upload = multer({
-  storage: storage,
-});
-
 // ----------port----------
 const port = 3001;
 
@@ -48,15 +33,9 @@ const stageFile = fs.readFileSync("stageData.json", "utf-8");
 const jsonStageData = JSON.parse(stageFile);
 stage = [...jsonStageData];
 
-// ----------clinic----------
-let clinic = [];
-const clinicFile = fs.readFileSync("clinicData.json", "utf-8");
-const jsonClinicData = JSON.parse(clinicFile);
-clinic = [...jsonClinicData];
-
 // ----------achieveDB----------
 let achievedbArr = [];
-const achievedbFile = fs.readFileSync("achieveDB.json", "utf-8");
+const achievedbFile = fs.readFileSync("achieveDBv2.json", "utf-8");
 const achievedbData = JSON.parse(achievedbFile);
 achievedbArr = [...achievedbData];
 
@@ -77,6 +56,21 @@ let chattingdbArr = [];
 const chattingdbFile = fs.readFileSync("chattingDB.json", "utf-8");
 const chattingdbData = JSON.parse(chattingdbFile);
 chattingdbArr = [...chattingdbData];
+
+// 이미지 추가
+const multer = require("multer");
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "./public/images"); // 저장 위치
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname); // 원래 이미지명으로 저장
+  },
+});
+const upload = multer({
+  storage: storage,
+});
 
 // ----------splash----------
 app.get("/", function (req, res) {
@@ -116,16 +110,16 @@ app.get("/StartDate", (req, res) => {
 app.post("/StartDateData", (req, res) => {
   // 월,일 입력값이 0보다 작으면 0 추가
   if (req.body.StartMonth < 10) {
-    req.body.StartMonth = "0" + req.body.StartMonth;
+    req.body.StartMonth = "" + req.body.StartMonth;
   }
   if (req.body.StartDay < 10) {
-    req.body.StartDay = "0" + req.body.StartDay;
+    req.body.StartDay = "" + req.body.StartDay;
   }
   if (req.body.StartHour < 10) {
-    req.body.StartHour = "0" + req.body.StartHour;
+    req.body.StartHour = "" + req.body.StartHour;
   }
   if (req.body.StartMinute < 10) {
-    req.body.StartMinute = "0" + req.body.StartMinute;
+    req.body.StartMinute = "" + req.body.StartMinute;
   }
   // 배열에 데이터 추가
   userArr[0].StartYear = req.body.StartYear;
@@ -146,16 +140,16 @@ app.get("/EndDate", (req, res) => {
 app.post("/EndDateData", (req, res) => {
   // 월,일 입력값이 0보다 작으면 0 추가
   if (req.body.EndMonth < 10) {
-    req.body.EndMonth = "0" + req.body.EndMonth;
+    req.body.EndMonth = "" + req.body.EndMonth;
   }
   if (req.body.EndDay < 10) {
-    req.body.EndDay = "0" + req.body.EndDay;
+    req.body.EndDay = "" + req.body.EndDay;
   }
   if (req.body.EndHour < 10) {
-    req.body.EndHour = "0" + req.body.EndHour;
+    req.body.EndHour = "" + req.body.EndHour;
   }
   if (req.body.EndMinute < 10) {
-    req.body.EndMinute = "0" + req.body.EndMinute;
+    req.body.EndMinute = "" + req.body.EndMinute;
   }
   // 배열에 데이터 추가
   userArr[0].EndYear = req.body.EndYear;
@@ -202,10 +196,10 @@ app.get("/BrithDay", (req, res) => {
 app.post("/BrithDayData", (req, res) => {
   // 월,일 입력값이 0보다 작으면 0 추가
   if (req.body.BrithDayMonth < 10) {
-    req.body.BrithDayMonth = "0" + req.body.BrithDayMonth;
+    req.body.BrithDayMonth = "" + req.body.BrithDayMonth;
   }
   if (req.body.BrithDayDay < 10) {
-    req.body.BrithDayDay = "0" + req.body.BrithDayDay;
+    req.body.BrithDayDay = "" + req.body.BrithDayDay;
   }
   // 배열에 데이터 추가
   userArr[0].BrithDayYear = req.body.BrithDayYear;
@@ -221,9 +215,17 @@ app.post("/BrithDayData", (req, res) => {
 app.get("/main", (req, res) => {
   // 현재시간
   const now = new Date();
-  let nowY = now.getFullYear();
-  let nowM = now.getMonth() + 1;
-  let nowD = now.getDate();
+  // 서버 한국 시간
+  const korea = new Date(
+    now.getFullYear(),
+    now.getMonth(),
+    now.getDate(),
+    now.getHours() + 9,
+    now.getMinutes()
+  );
+  let nowY = korea.getFullYear();
+  let nowM = korea.getMonth() + 1;
+  let nowD = korea.getDate();
   // 월,일 0보다 작으면 0추가
   if (nowM < 10) {
     nowM = "0" + nowM;
@@ -240,7 +242,7 @@ app.get("/main", (req, res) => {
     userArr[0].EndMinute
   );
   // 지난시간(분)
-  const pass = Math.floor((now - start) / (1000 * 60));
+  const pass = Math.floor((korea - start) / (1000 * 60));
 
   // 현재 단계 구하기
   let stageCount = stage
@@ -256,7 +258,7 @@ app.get("/main", (req, res) => {
   const testCount = test[2].Count;
 
   // 금연 진행 날짜
-  const day = parseInt((now - start) / (60 * 60 * 24 * 1000));
+  const day = parseInt((korea - start) / (60 * 60 * 24 * 1000));
 
   // 각 조건condition에 맞는 데이터 불러오기
   let testPriceArr = testPrice.filter(
@@ -315,6 +317,7 @@ app.get("/NoMoreInfo", (req, res) => {
 app.get("/stage", function (req, res) {
   // 현재시간
   const now = new Date().getTime();
+
   // 시작시간
   const start = new Date(
     userArr[0].EndYear,
@@ -324,8 +327,8 @@ app.get("/stage", function (req, res) {
     userArr[0].EndMinute
   ).getTime();
   // 지난시간(분)
-  const pass = Math.floor((now - start) / (1000 * 60));
-
+  let pass = Math.floor((now - start) / (1000 * 60));
+  pass += 9 * 60;
   // 현재 단계 구하기
   let stageCount = stage
     .map((e) => {
@@ -350,9 +353,17 @@ app.get("/symptom", function (req, res) {
 app.get("/achievement", function (req, res) {
   // 현재 시간 구하기
   const now = new Date();
-  let nowY = now.getFullYear();
-  let nowM = now.getMonth() + 1;
-  let nowD = now.getDate();
+  // 서버 한국 시간
+  const korea = new Date(
+    now.getFullYear(),
+    now.getMonth(),
+    now.getDate(),
+    now.getHours() + 9,
+    now.getMinutes()
+  );
+  let nowY = korea.getFullYear();
+  let nowM = korea.getMonth() + 1;
+  let nowD = korea.getDate();
 
   // 월,일이 0보다 작으면 0추가하기
   if (nowM < 10) {
@@ -375,7 +386,7 @@ app.get("/achievement", function (req, res) {
   const testDay = test[1].Day;
   const testCount = test[2].Count;
   // 금연 진행 날짜
-  const day = parseInt((now - start) / (60 * 60 * 24 * 1000));
+  const day = parseInt((korea - start) / (60 * 60 * 24 * 1000));
 
   let testPriceArr = testPrice.filter((e) => {
     return e.condition <= day * userArr[0].Price;
@@ -389,17 +400,23 @@ app.get("/achievement", function (req, res) {
 
   if (testPriceArr.length > 0) {
     if (testPriceArr.at(-1).date == undefined) {
-      testPriceArr.at(-1).date = `${nowY}-${nowM}-${nowD}`;
+      testPriceArr.forEach((e) => {
+        e.date = `${nowY}-${nowM}-${nowD}`;
+      });
     }
   }
   if (testDayArr.length > 0) {
     if (testDayArr.at(-1).date == undefined) {
-      testDayArr.at(-1).date = `${nowY}-${nowM}-${nowD}`;
+      testDayArr.forEach((e) => {
+        e.date = `${nowY}-${nowM}-${nowD}`;
+      });
     }
   }
   if (testCountArr.length > 0) {
     if (testCountArr.at(-1).date == undefined) {
-      testCountArr.at(-1).date = `${nowY}-${nowM}-${nowD}`;
+      testCountArr.forEach((e) => {
+        e.date = `${nowY}-${nowM}-${nowD}`;
+      });
     }
   }
 
@@ -425,7 +442,7 @@ app.get("/title", function (req, res) {
   res.render("pages/title.ejs");
 });
 // ----------setting----------
-app.get("/setting", async function (req, res) {
+app.get("/setting", function (req, res) {
   res.render("pages/setting.ejs");
 });
 
@@ -439,20 +456,42 @@ app.post("/memoReset", (req, res) => {
 // ----------사용자 정보 초기화----------
 app.post("/userReset", (req, res) => {
   userArr = [{}];
+  // 업적 달성 날짜 초기화
+  test[0].Price.forEach((e) => {
+    e.date = undefined;
+  });
+  test[1].Day.forEach((e) => {
+    e.date = undefined;
+  });
+  test[2].Count.forEach((e) => {
+    e.date = undefined;
+  });
   fs.writeFileSync("userData.json", JSON.stringify(userArr));
+  fs.writeFileSync("achieveDBv2.json", JSON.stringify(test));
   res.redirect("/");
 });
 // ----------전체 정보 초기화----------
 app.post("/allReset", (req, res) => {
   userArr = [{}];
   memoArr = [];
+  // 업적 달성 날짜 초기화
+  test[0].Price.forEach((e) => {
+    e.date = undefined;
+  });
+  test[1].Day.forEach((e) => {
+    e.date = undefined;
+  });
+  test[2].Count.forEach((e) => {
+    e.date = undefined;
+  });
   fs.writeFileSync("./public/json/memo.json", JSON.stringify(memoArr));
   fs.writeFileSync("userData.json", JSON.stringify(userArr));
+  fs.writeFileSync("achieveDBv2.json", JSON.stringify(test));
   res.redirect("/");
 });
 // ----------사용자 정보 수정----------
-app.post("/update", upload.single("image"), function (req, res) {
-  newData = {
+app.post("/delete", upload.single("img"), function (req, res) {
+  const newData = {
     userName: req.body.userName,
     BrithDayYear: req.body.BrithDayYear,
     BrithDayMonth: req.body.BrithDayMonth,
@@ -469,66 +508,69 @@ app.post("/update", upload.single("image"), function (req, res) {
     EndDay: req.body.EndDay,
     EndHour: req.body.EndHour,
     EndMinute: req.body.EndMinute,
-    img: req.file.filename,
   };
+  if (req.file) {
+    newData.img = req.file.filename;
+  }
 
   userArr.splice(0, 1, newData);
+
   fs.writeFileSync("userData.json", JSON.stringify(userArr));
   res.redirect("/userinfo");
 });
 
-// ****업적 test*****
-app.get("/test", function (req, res) {
-  const now = new Date();
-  let nowY = now.getFullYear();
-  let nowM = now.getMonth() + 1;
-  let nowD = now.getDate();
+// // ****업적 test*****
+// app.get("/test", function (req, res) {
+//   const now = new Date();
+//   let nowY = now.getFullYear();
+//   let nowM = now.getMonth() + 1;
+//   let nowD = now.getDate();
 
-  if (nowM < 10) {
-    nowM = "0" + nowM;
-  }
-  if (nowD < 10) {
-    nowD = "0" + nowD;
-  }
+//   if (nowM < 10) {
+//     nowM = "0" + nowM;
+//   }
+//   if (nowD < 10) {
+//     nowD = "0" + nowD;
+//   }
 
-  const start = new Date(
-    userArr[0].EndYear,
-    userArr[0].EndMonth - 1,
-    userArr[0].EndDay,
-    userArr[0].EndHour,
-    userArr[0].EndMinute
-  );
-  const testPrice = test[0].Price;
-  const testDay = test[1].Day;
-  const testCount = test[2].Count;
-  const day = parseInt((now - start) / (60 * 60 * 24 * 1000));
+//   const start = new Date(
+//     userArr[0].EndYear,
+//     userArr[0].EndMonth - 1,
+//     userArr[0].EndDay,
+//     userArr[0].EndHour,
+//     userArr[0].EndMinute
+//   );
+//   const testPrice = test[0].Price;
+//   const testDay = test[1].Day;
+//   const testCount = test[2].Count;
+//   const day = parseInt((now - start) / (60 * 60 * 24 * 1000));
 
-  let testPriceArr = testPrice.filter((e) => {
-    return e.condition <= day * userArr[0].Price;
-  });
-  let testDayArr = testDay.filter((e) => {
-    return e.condition <= day;
-  });
-  let testCountArr = testCount.filter((e) => {
-    return e.condition <= day * userArr[0].CountPerDay;
-  });
+//   let testPriceArr = testPrice.filter((e) => {
+//     return e.condition <= day * userArr[0].Price;
+//   });
+//   let testDayArr = testDay.filter((e) => {
+//     return e.condition <= day;
+//   });
+//   let testCountArr = testCount.filter((e) => {
+//     return e.condition <= day * userArr[0].CountPerDay;
+//   });
 
-  if (testPriceArr.at(-1).date == undefined) {
-    testPriceArr.at(-1).date = `${nowY}-${nowM}-${nowD}`;
-  }
-  if (testDayArr.at(-1).date == undefined) {
-    testDayArr.at(-1).date = `${nowY}-${nowM}-${nowD}`;
-  }
-  if (testCountArr.at(-1).date == undefined) {
-    testCountArr.at(-1).date = `${nowY}-${nowM}-${nowD}`;
-  }
+//   if (testPriceArr.at(-1).date == undefined) {
+//     testPriceArr.at(-1).date = `${nowY}-${nowM}-${nowD}`;
+//   }
+//   if (testDayArr.at(-1).date == undefined) {
+//     testDayArr.at(-1).date = `${nowY}-${nowM}-${nowD}`;
+//   }
+//   if (testCountArr.at(-1).date == undefined) {
+//     testCountArr.at(-1).date = `${nowY}-${nowM}-${nowD}`;
+//   }
 
-  let totalLength =
-    testPriceArr.length + testDayArr.length + testCountArr.length;
+//   let totalLength =
+//     testPriceArr.length + testDayArr.length + testCountArr.length;
 
-  fs.writeFileSync("achieveDBv2.json", JSON.stringify(test));
-  res.render("pages/test.ejs", { test, totalLength });
-});
+//   fs.writeFileSync("achieveDBv2.json", JSON.stringify(test));
+//   res.render("pages/test.ejs", { test, totalLength });
+// });
 
 // ----------calendar----------
 app.get("/calendar", function (req, res) {
@@ -567,7 +609,7 @@ app.get("/community", (req, res) => {
 
 // ----------chatting (채팅) 페이지----------
 app.get("/chatting", function (req, res) {
-  res.render("pages/chatting.ejs", { chattingdbArr });
+  res.render("pages/chatting.ejs", { chattingdbArr, userArr });
 });
 // ----------chatting (채팅) create----------
 app.post("/chattingcreate", function (req, res) {

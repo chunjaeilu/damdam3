@@ -15,18 +15,18 @@
         </a>
         <h1 class="userinfo-title-main">내 정보</h1>
       </div>
-      <form action="/update" method="post" enctype="multipart/form-data">
+      <form action="/delete" method="post" enctype="multipart/form-data">
         <div class="inputbox-name">
           <input
-            class="imgUp"
+          class="imgUp"
             type="file"
             accept="image/*"
             multiple
             style="display: none"
-            name="image"
+            name="img"
             onchange="readURL(this)"
           />
-          <img class="userImg" src="/images/mdi_user.png" alt="프로필" />
+          <img class="userImg" src="/images/mdi_user.png" alt="기본사진" />
           <input
             type="text"
             value="<%= userArr[0].userName %>"
@@ -203,8 +203,8 @@
             <p>분</p>
           </div>
         </div>
-        <div>
-          <!-- inputbox-end -->
+        <!-- inputbox-end -->
+
           <button class="input-userinfo-button" type="submit" name="delete">
             수정
           </button>
@@ -213,7 +213,7 @@
 
       <footer>
         <div class="home">
-          <a href="/"><i class="fa-solid fa-house"></i></a>
+          <a href="/main"><i class="fa-solid fa-house"></i></a>
         </div>
         <div class="achievement">
           <a href="/achievement"><i class="fa-solid fa-trophy"></i></a>
@@ -232,9 +232,8 @@
       src="https://kit.fontawesome.com/67eff22c15.js"
       crossorigin="anonymous"
     ></script>
-
     <script>
-      const upload = document.querySelector(".userImg");
+       const upload = document.querySelector(".userImg");
       const realUpload = document.querySelector(".imgUp");
       upload.addEventListener("click", () => realUpload.click());
 
@@ -247,11 +246,12 @@
           };
 
           reader.readAsDataURL(input.files[0]);
+          console.log(input.files[0]);
         } else {
-          document.querySelector("userImg").src = "/images/mdi_user.png";
+          upload.src = "/images/mdi_user.png";
+          console.log("123");
         }
       }
-      
       let src = "<%= userArr[0].img %>";
       if (src) {
         upload.setAttribute("src", `/images/${src}`);
@@ -260,4 +260,5 @@
       }
     </script>
   </body>
+  
 </html>
