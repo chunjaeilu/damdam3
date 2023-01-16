@@ -27,6 +27,7 @@ a {
   justify-content: space-between;
   align-items: center;
   margin: 30px 20px 0 20px;
+  background: var(--main-color);
 }
 #main .container .header .user-name h1 {
   font-size: 24px;
@@ -38,6 +39,12 @@ a {
 }
 #main .container .header .info-setting a {
   color: var(--main-color);
+  display: flex;
+}
+#main .container .header .info-setting a img {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
 }
 #main .container .header .info-setting .info,
 #main .container .header .info-setting .setting {
@@ -168,8 +175,12 @@ a {
   justify-content: space-between;
   align-items: center;
 }
+#main .result .result-contents .overcome-content {
+  width: 100%;
+}
 #main .result .result-contents .overcome-content a {
-  gap: 80px;
+  display: flex;
+  justify-content: space-between;
 }
 #main .result .result-contents .overcome-content span {
   display: flex;
@@ -410,13 +421,25 @@ footer .calendar.active a {
 }
 #community .container .content a.clinic {
   background-image: url(../images/clinic.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 #community .container .content a.chatting {
   background-image: url(../images/chatting.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 #community .container .content a.site1 div {
   background-image: url(../images/site1.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 #community .container .content a.site2 div {
   background-image: url(../images/site2.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }

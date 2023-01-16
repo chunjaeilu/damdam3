@@ -27,6 +27,7 @@ body {
   display: flex;
   justify-content: center;
   margin: 30px 20px;
+  font-size: 36px;
 }
 .setting-layout-small {
   margin: 0 auto;
