@@ -27,7 +27,6 @@ a {
   justify-content: space-between;
   align-items: center;
   margin: 30px 20px 0 20px;
-  background: var(--main-color);
 }
 #main .container .header .user-name h1 {
   font-size: 24px;
