@@ -113,7 +113,7 @@ thead tr:last-child {
 }
 .select {
   background: var(--main-color);
-  border-radius: 50%;
+  border-radius: 21px;
   color: #ffffff !important;
 }
 
