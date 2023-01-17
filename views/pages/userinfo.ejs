@@ -18,7 +18,7 @@
       <form action="/delete" method="post" enctype="multipart/form-data">
         <div class="inputbox-name">
           <input
-          class="imgUp"
+            class="imgUp"
             type="file"
             accept="image/*"
             multiple
@@ -205,10 +205,9 @@
         </div>
         <!-- inputbox-end -->
 
-          <button class="input-userinfo-button" type="submit" name="delete">
-            수정
-          </button>
-        </div>
+        <button class="input-userinfo-button" type="submit" name="delete">
+          수정
+        </button>
       </form>
 
       <footer>
@@ -233,7 +232,7 @@
       crossorigin="anonymous"
     ></script>
     <script>
-       const upload = document.querySelector(".userImg");
+      const upload = document.querySelector(".userImg");
       const realUpload = document.querySelector(".imgUp");
       upload.addEventListener("click", () => realUpload.click());
 
@@ -260,5 +259,4 @@
       }
     </script>
   </body>
-  
 </html>

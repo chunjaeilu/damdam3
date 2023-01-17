@@ -57,11 +57,12 @@
       let boxEl = document.querySelectorAll(".content-box");
       let progressEl = document.querySelectorAll(".content-box progress");
       for (b = 0; b < boxEl.length; b++) {
-        let progressValue = progressEl[b].attributes.value.value;
+        progressValue = progressEl[b].attributes.value.value;
         if (progressValue >= 100) {
           boxEl[b].classList.add("complete");
         }
       }
+
       let completeBox = document.querySelectorAll(".content-box.complete");
       boxEl[completeBox.length].classList.add("challenge");
     </script>
