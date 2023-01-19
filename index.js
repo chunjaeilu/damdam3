@@ -57,7 +57,7 @@ const chattingdbFile = fs.readFileSync("chattingDB.json", "utf-8");
 const chattingdbData = JSON.parse(chattingdbFile);
 chattingdbArr = [...chattingdbData];
 
-// 이미지 추가
+// ----------multer----------
 const multer = require("multer");
 
 const storage = multer.diskStorage({
@@ -72,6 +72,34 @@ const upload = multer({
   storage: storage,
 });
 
+// ----------다크모드----------
+let modeArr = [];
+const modereadfile = fs.readFileSync("black.json", "utf-8");
+const modeArrData = JSON.parse(modereadfile);
+modeArr = [...modeArrData];
+
+// ----------영문----------
+let langArr = [];
+const langreadfile = fs.readFileSync("lang.json", "utf-8");
+const langArrData = JSON.parse(langreadfile);
+langArr = [...langArrData];
+
+// ----------en----------
+let stageEn = [];
+const stageEnFile = fs.readFileSync("stageDataEn.json", "utf-8");
+const jsonStageDataEn = JSON.parse(stageEnFile);
+stageEn = [...jsonStageDataEn];
+
+let knowledgeEn104 = [];
+const knowledgeEnFile = fs.readFileSync("knowledgeDataEn.json", "utf-8");
+const jsonKnowEnData = JSON.parse(knowledgeEnFile);
+knowledgeEn104 = [...jsonKnowEnData];
+
+let achievedbEnArr = [];
+const achievedbEnFile = fs.readFileSync("achieveDBv2En.json", "utf-8");
+const achievedbDataEn = JSON.parse(achievedbEnFile);
+achievedbEnArr = [...achievedbDataEn];
+
 // ----------splash----------
 app.get("/", function (req, res) {
   res.render("pages/index.ejs", { userArr });
@@ -79,7 +107,7 @@ app.get("/", function (req, res) {
 
 // ----------UserName----------
 app.get("/UserName", (req, res) => {
-  res.render("pages/UserName.ejs");
+  res.render("pages/UserName.ejs", { modeArr });
 });
 // ----------InpuUserNameData----------
 app.post("/UserNameData", (req, res) => {
@@ -304,6 +332,10 @@ app.get("/main", (req, res) => {
     testPriceArr,
     testDayArr,
     testCountArr,
+    modeArr,
+    langArr,
+    stageEn,
+    knowledgeEn104,
   });
 });
 
@@ -336,17 +368,29 @@ app.get("/stage", function (req, res) {
     })
     .filter((e) => e == true).length;
 
-  res.render("pages/stage.ejs", { stage, pass, stageCount });
+  res.render("pages/stage.ejs", {
+    stage,
+    pass,
+    stageCount,
+    modeArr,
+    langArr,
+    stageEn,
+  });
 });
 
 // --------------------knowledge--------------------
 app.get("/knowledge", function (req, res) {
-  res.render("pages/knowledge.ejs", { knowledge104 });
+  res.render("pages/knowledge.ejs", {
+    knowledge104,
+    modeArr,
+    langArr,
+    knowledgeEn104,
+  });
 });
 
 // ----------symptom (금단증상) 페이지----------
 app.get("/symptom", function (req, res) {
-  res.render("pages/symptom.ejs");
+  res.render("pages/symptom.ejs", { modeArr, langArr });
 });
 
 // ----------achievement (업적) 페이지----------
@@ -385,22 +429,44 @@ app.get("/achievement", function (req, res) {
   const testPrice = test[0].Price;
   const testDay = test[1].Day;
   const testCount = test[2].Count;
+  const achievedbEnArrPirce = achievedbEnArr[0].Price;
+  const achievedbEnArrDay = achievedbEnArr[1].Day;
+  const achievedbEnArrCount = achievedbEnArr[2].Count;
+
   // 금연 진행 날짜
   const day = parseInt((korea - start) / (60 * 60 * 24 * 1000));
 
   let testPriceArr = testPrice.filter((e) => {
     return e.condition <= day * userArr[0].Price;
   });
+  let achievedbEnArrPirceArr = achievedbEnArrPirce.filter((e) => {
+    return e.condition <= day * userArr[0].Price;
+  });
+
   let testDayArr = testDay.filter((e) => {
     return e.condition <= day;
   });
+  let achievedbEnArrDayArr = achievedbEnArrDay.filter((e) => {
+    return e.condition <= day;
+  });
+
   let testCountArr = testCount.filter((e) => {
+    return e.condition <= day * userArr[0].CountPerDay;
+  });
+  let achievedbEnArrCountArr = achievedbEnArrCount.filter((e) => {
     return e.condition <= day * userArr[0].CountPerDay;
   });
 
   if (testPriceArr.length > 0) {
     if (testPriceArr.at(-1).date == undefined) {
       testPriceArr.forEach((e) => {
+        e.date = `${nowY}-${nowM}-${nowD}`;
+      });
+    }
+  }
+  if (achievedbEnArrPirceArr.length > 0) {
+    if (achievedbEnArrPirceArr.at(-1).date == undefined) {
+      achievedbEnArrPirceArr.forEach((e) => {
         e.date = `${nowY}-${nowM}-${nowD}`;
       });
     }
@@ -412,9 +478,23 @@ app.get("/achievement", function (req, res) {
       });
     }
   }
+  if (achievedbEnArrDayArr.length > 0) {
+    if (achievedbEnArrDayArr.at(-1).date == undefined) {
+      achievedbEnArrDayArr.forEach((e) => {
+        e.date = `${nowY}-${nowM}-${nowD}`;
+      });
+    }
+  }
   if (testCountArr.length > 0) {
     if (testCountArr.at(-1).date == undefined) {
       testCountArr.forEach((e) => {
+        e.date = `${nowY}-${nowM}-${nowD}`;
+      });
+    }
+  }
+  if (achievedbEnArrCountArr.length > 0) {
+    if (achievedbEnArrCountArr.at(-1).date == undefined) {
+      achievedbEnArrCountArr.forEach((e) => {
         e.date = `${nowY}-${nowM}-${nowD}`;
       });
     }
@@ -431,21 +511,45 @@ app.get("/achievement", function (req, res) {
     achievedbArr,
     userArr,
     allLength,
+    modeArr,
+    langArr,
+    achievedbEnArr,
   });
 });
 
 // ----------userinfo----------
 app.get("/userinfo", async function (req, res) {
-  res.render("pages/userinfo.ejs", { userArr });
+  res.render("pages/userinfo.ejs", { userArr, modeArr, langArr });
 });
 app.get("/title", function (req, res) {
   res.render("pages/title.ejs");
 });
 // ----------setting----------
 app.get("/setting", function (req, res) {
-  res.render("pages/setting.ejs");
+  res.render("pages/setting.ejs", { modeArr, langArr });
 });
-
+// ----------다크모드----------
+app.post("/theme", function (req, res) {
+  if (modeArr[0].mode == "black") {
+    modeArr[0].mode = "white";
+  } else {
+    modeArr[0].mode = "black";
+  }
+  fs.writeFileSync("black.json", JSON.stringify(modeArr));
+  res.redirect("/setting");
+});
+// ----------언어 변경----------
+app.post("/lang", function (req, res) {
+  if (langArr[0].lang[1].en == "yes") {
+    langArr[0].lang[0].kor = "yes";
+    langArr[0].lang[1].en = "";
+  } else {
+    langArr[0].lang[0].kor = "";
+    langArr[0].lang[1].en = "yes";
+  }
+  fs.writeFileSync("lang.json", JSON.stringify(langArr));
+  res.redirect("/setting");
+});
 // ----------데이터 reset----------
 // ----------달력 정보 초기화----------
 app.post("/memoReset", (req, res) => {
@@ -516,7 +620,7 @@ app.post("/delete", upload.single("img"), function (req, res) {
   userArr.splice(0, 1, newData);
 
   fs.writeFileSync("userData.json", JSON.stringify(userArr));
-  res.redirect("/userinfo");
+  res.redirect("/main");
 });
 
 // // ****업적 test*****
@@ -574,7 +678,19 @@ app.post("/delete", upload.single("img"), function (req, res) {
 
 // ----------calendar----------
 app.get("/calendar", function (req, res) {
-  res.render("pages/calendar.ejs", { memoArr });
+  res.render("pages/calendar.ejs", { memoArr, modeArr, langArr });
+});
+// ----------calendar 메모 삭제----------
+app.post("/memoDelete/:day/:id", (req, res) => {
+  // 선택한 메모 값 찾기
+  // 전체 메모 배열(memoArr).filter((e) 각각의 배열 값(e) 중에서 프로퍼티 키 값(Object.keys(e)이 오늘 날짜와 일치하는 것 중에서) 선택한 메모의 i(인덱스 번호 값))
+  let selectMemo = memoArr.filter((e) => Object.keys(e)[0] == req.params.day)[
+    req.params.id
+  ];
+  // 전체 메모 배열에 새로운 배열 덮어쓰기 (선택한 메모를 제외한 값)
+  memoArr = memoArr.filter((e) => e !== selectMemo);
+  fs.writeFileSync("./public/json/memo.json", JSON.stringify(memoArr));
+  res.redirect("/calendar");
 });
 // ----------create----------
 // 달력 정보 추가
@@ -604,12 +720,17 @@ app.post("/create", function (req, res) {
 
 // ----------community 이동 페이지----------
 app.get("/community", (req, res) => {
-  res.render("pages/community.ejs");
+  res.render("pages/community.ejs", { modeArr, langArr });
 });
 
 // ----------chatting (채팅) 페이지----------
 app.get("/chatting", function (req, res) {
-  res.render("pages/chatting.ejs", { chattingdbArr, userArr });
+  res.render("pages/chatting.ejs", {
+    chattingdbArr,
+    userArr,
+    modeArr,
+    langArr,
+  });
 });
 // ----------chatting (채팅) create----------
 app.post("/chattingcreate", function (req, res) {
@@ -624,7 +745,7 @@ app.post("/chattingcreate", function (req, res) {
 // ----------clinic----------
 app.get("/clinic", function (req, res) {
   let name = userArr[0].userName;
-  res.render("pages/clinic.ejs", { name });
+  res.render("pages/clinic.ejs", { name, modeArr, langArr });
 });
 
 // ----------listen----------
