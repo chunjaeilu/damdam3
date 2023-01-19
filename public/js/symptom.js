@@ -1,20 +1,6 @@
 // 금단증상 버튼 클릭 이벤트 (버튼 색 변경과 내용 변화가 함께 들어있음)
 
 $(function () {
-  let nameArr = [
-    "신경과민",
-    "우울감",
-    "불안",
-    "두통",
-    "갈증,목, 잇몸, 혀의 통증",
-    "집중력 감소",
-    "소화장애",
-    "기침",
-    "공복감, 배고픔",
-    "불면",
-    "피로감",
-    "따끔따끔 쑤시는 느낌",
-  ];
   let nameArrEn = [
     "Too nervous",
     "Depression",
@@ -29,22 +15,6 @@ $(function () {
     "Tired",
     "It feels like it's stings",
   ];
-
-  let symArr = [
-    " 니코틴은 안정감을 주고, 긴장을 해소하는 효과를 가지고 있습니다. 오랫동안 흡연하여 일단 중독이 되면 금연하여 니코틴 공급이 끊어졌을 때 신경계에 일대 혼란이 일어납니다. 결과적으로 신경질적이 되기 쉽고 예민하게 됩니다. 수일간 지속되다가 사라집니다.",
-    " 금연 후에 마음이 울적해지는 것은 흔히 일어나는 현상입니다. 이런 증상은 수일간 지속되다가 사라집니다. 그렇지만 우울증 때문에 담배를 다시 피우기 시작한다면 좌절감과 죄책감으로 더 우울해질 수 있습니다. ",
-    " 금연 후 자율신경 및 내분비계통의 부조화로 인해 생기는 증상입니다. 불안, 초조, 욕구불만, 노여움 등의 증상과 같이 나타나기도 합니다. 대개 생활 속에서 겪는 일들과 연결되어 있어 금단 증상임을 깨닫기 어려운 경우가 많습니다. 수일간 지속되다가 사라집니다.",
-    " 보통 금연하는 사람의 4명 중 1명에게 나타날 수 있는 증상입니다. 혈액순환 속도가 조금 느려지면서 뇌로 가는 혈액과 산소를 충분히 얻지 못해서 나타나는 증상입니다. 수주일 이내에 사라집니다.",
-    " 이러한 증상은 입안에 항상 존재하면서 영향을 주던 화학물질에 의해 길들여졌다가 구강의 조직들이 회복되는 과정에서 일어나는 증상으로 수주일간 지속되다가 사라집니다.",
-    " 금연 후 정신 집중이 되지 않아서 일을 할 수 없다는 사람이 있습니다. 이 또한 금단 증상의 하나이고, 금연 후 대개 2주~수주 이내에 사라집니다.",
-    " 장 운동이 느려질 수 있습니다. 소화가 잘 안되고 변비가 생기고 가스가 찰 수 있습니다. 보통 1~2주 정도 지속 될 수 있습니다.",
-    " 기침은 니코틴 금단증상과 관련이 없습니다. 이것은 기도를 막고 호흡을 힘들게 했던 가래와 타르를 제거하기 위한 신체의 정상적인 방어 과정이라고 볼 수 있습니다. 금연 후 수일 동안 지속되다가 사라집니다.",
-    " 대부분의 사람들이 금연 후 느낄수 있는 증상으로 평소에 먹던 양보다 더 많이 먹으려는 경향이 생기고 음식물에 대한 적응이 잘 이루어지면서 체중이 증가하는 것을 흔히 볼 수 있습니다. 수 주일 이내에 사라집니다.",
-    " 금단증상으로 수면장애가 발생하거나 두통,신경과민, 기침 등의 증상에 의해서 수면장애가 발생합니다.",
-    " 여러 금단 증상과 더불어 쉽게 피로감을 느낄 수 있습니다.",
-    " 따끔따끔 쑤시는 느낌 (특히 다리와 팔)은 산소 공급이 다시 정상적으로 이루어지면서 나타나는 현상입니다.",
-  ];
-
   let symArrEn = [
     " Nicotine gives you a sense of stability and has the effect of relieving tension. Once you smoke for a long time and become addicted, you quit smoking, causing great confusion in the nervous system when the supply of nicotine is cut off. As a result, you are likely to be nervous and sensitive. It lasts for several days and then disappears.",
     " It is a common phenomenon that you feel depressed after quitting smoking. These symptoms last for several days and then disappear. However, if you start smoking again because of depression, you can become more depressed with frustration and guilt. ",
@@ -58,6 +28,48 @@ $(function () {
     "Withdrawal symptoms can cause sleep disorders, or symptoms such as headaches, nervousness, and coughing.",
     " You can easily feel tired, along with various withdrawal symptoms.",
     " Tingling sensation (especially legs and arms) is a phenomenon that occurs when oxygen supply is normal again.",
+  ];
+  let methodArrEn = [
+    "1) Take a rest and take a walk in fresh air <br> 2) Start exercising <br> 3) Relax by taking a deep breath <br> 4) Think of the quiet and peaceful scenes you experienced",
+    "1) Work out to sweat, drink a lot of water <br> 2) Relax your body to lie down comfortably <br> 3) Take a warm shower <br> 4) Drink fruit juice <br> 5) Think of fun",
+    "1) bathing or showering in hot water <br> 2) taking a light walk or exercising <br> 3) lying down <br> 4) thinking of quiet and peaceful scenes you experienced",
+    "1) Drink a lot of water and reduce coffee. <br> 2) Light exercise <br> 3) Bath or shower in hot water <br> 4) Open windows or take a light walk for fresh air <br> 5) Lie down and relax for 5 minutes",
+    "1) Take a sip of ice water or juice <br> 2) Chewing gum helps <br> 3) Breathing deeply <br> 4) Brushing teeth",
+    "1) It is helpful to take a rest, relax, and take a deep breath. <br> 2) If you're having a hard time, it's better to stop working for a while and wake up altogether.",
+    "1) Avoid eating high-fat foods, sweet foods, foods high in caffeine, etc. <br> 2) Avoid stimulating food. <br> 3) Eat foods high in fiber",
+    "1) Drink lots of water <br> 2) Do not use antibiotics. <br> 3) Reduce cough as much as possible.",
+    "1) Every time, drinking snacks or drinks with low calories and exercising moderately are helpful.",
+    "1) Avoid drinking caffeine-containing drinks after 6 p.m., relax, and try to meditate. <br> 2) Taking a warm shower before going to bed also helps you sleep well.",
+    "1) For two weeks when withdrawal symptoms are severe, it may be helpful to avoid excessive work and sleep briefly. <br> 2) Ask for understanding in advance and inform the surrounding people that withdrawal symptoms and fatigue may occur.",
+    "1) Take a warm bath. <br> 2) Massage the stinging area. <br> 3) Take a light walk.",
+  ];
+  let nameArr = [
+    "신경과민",
+    "우울감",
+    "불안",
+    "두통",
+    "갈증,목, 잇몸, 혀의 통증",
+    "집중력 감소",
+    "소화장애",
+    "기침",
+    "공복감, 배고픔",
+    "불면",
+    "피로감",
+    "따끔따끔 쑤시는 느낌",
+  ];
+  let symArr = [
+    " 니코틴은 안정감을 주고, 긴장을 해소하는 효과를 가지고 있습니다. 오랫동안 흡연하여 일단 중독이 되면 금연하여 니코틴 공급이 끊어졌을 때 신경계에 일대 혼란이 일어납니다. 결과적으로 신경질적이 되기 쉽고 예민하게 됩니다. 수일간 지속되다가 사라집니다.",
+    " 금연 후에 마음이 울적해지는 것은 흔히 일어나는 현상입니다. 이런 증상은 수일간 지속되다가 사라집니다. 그렇지만 우울증 때문에 담배를 다시 피우기 시작한다면 좌절감과 죄책감으로 더 우울해질 수 있습니다. ",
+    " 금연 후 자율신경 및 내분비계통의 부조화로 인해 생기는 증상입니다. 불안, 초조, 욕구불만, 노여움 등의 증상과 같이 나타나기도 합니다. 대개 생활 속에서 겪는 일들과 연결되어 있어 금단 증상임을 깨닫기 어려운 경우가 많습니다. 수일간 지속되다가 사라집니다.",
+    " 보통 금연하는 사람의 4명 중 1명에게 나타날 수 있는 증상입니다. 혈액순환 속도가 조금 느려지면서 뇌로 가는 혈액과 산소를 충분히 얻지 못해서 나타나는 증상입니다. 수주일 이내에 사라집니다.",
+    " 이러한 증상은 입안에 항상 존재하면서 영향을 주던 화학물질에 의해 길들여졌다가 구강의 조직들이 회복되는 과정에서 일어나는 증상으로 수주일간 지속되다가 사라집니다.",
+    " 금연 후 정신 집중이 되지 않아서 일을 할 수 없다는 사람이 있습니다. 이 또한 금단 증상의 하나이고, 금연 후 대개 2주~수주 이내에 사라집니다.",
+    " 장 운동이 느려질 수 있습니다. 소화가 잘 안되고 변비가 생기고 가스가 찰 수 있습니다. 보통 1~2주 정도 지속 될 수 있습니다.",
+    " 기침은 니코틴 금단증상과 관련이 없습니다. 이것은 기도를 막고 호흡을 힘들게 했던 가래와 타르를 제거하기 위한 신체의 정상적인 방어 과정이라고 볼 수 있습니다. 금연 후 수일 동안 지속되다가 사라집니다.",
+    " 대부분의 사람들이 금연 후 느낄수 있는 증상으로 평소에 먹던 양보다 더 많이 먹으려는 경향이 생기고 음식물에 대한 적응이 잘 이루어지면서 체중이 증가하는 것을 흔히 볼 수 있습니다. 수 주일 이내에 사라집니다.",
+    " 금단증상으로 수면장애가 발생하거나 두통,신경과민, 기침 등의 증상에 의해서 수면장애가 발생합니다.",
+    " 여러 금단 증상과 더불어 쉽게 피로감을 느낄 수 있습니다.",
+    " 따끔따끔 쑤시는 느낌 (특히 다리와 팔)은 산소 공급이 다시 정상적으로 이루어지면서 나타나는 현상입니다.",
   ];
 
   let methodArr = [
@@ -75,62 +87,91 @@ $(function () {
     "1) 따뜻한 물로 목욕을 한다 <br> 2) 따끔거리는 곳을 마사지 해준다 <br> 3) 가벼운 산책을 한다.",
   ];
 
-  let methodArrEn = [
-    "1) Take a rest and take a walk in fresh air <br> 2) Start exercising <br> 3) Relax by taking a deep breath <br> 4) Think of the quiet and peaceful scenes you experienced",
-    "1) Work out to sweat, drink a lot of water <br> 2) Relax your body to lie down comfortably <br> 3) Take a warm shower <br> 4) Drink fruit juice <br> 5) Think of fun",
-    "1) bathing or showering in hot water <br> 2) taking a light walk or exercising <br> 3) lying down <br> 4) thinking of quiet and peaceful scenes you experienced",
-    "1) Drink a lot of water and reduce coffee. <br> 2) Light exercise <br> 3) Bath or shower in hot water <br> 4) Open windows or take a light walk for fresh air <br> 5) Lie down and relax for 5 minutes",
-    "1) Take a sip of ice water or juice <br> 2) Chewing gum helps <br> 3) Breathing deeply <br> 4) Brushing teeth",
-    "1) It is helpful to take a rest, relax, and take a deep breath. <br> 2) If you're having a hard time, it's better to stop working for a while and wake up altogether.",
-    "1) Avoid eating high-fat foods, sweet foods, foods high in caffeine, etc. <br> 2) Avoid stimulating food. <br> 3) Eat foods high in fiber",
-    "1) Drink lots of water <br> 2) Do not use antibiotics. <br> 3) Reduce cough as much as possible.",
-    "1) Every time, drinking snacks or drinks with low calories and exercising moderately are helpful.",
-    "1) Avoid drinking caffeine-containing drinks after 6 p.m., relax, and try to meditate. <br> 2) Taking a warm shower before going to bed also helps you sleep well.",
-    "1) For two weeks when withdrawal symptoms are severe, it may be helpful to avoid excessive work and sleep briefly. <br> 2) Ask for understanding in advance and inform the surrounding people that withdrawal symptoms and fatigue may occur.",
-    "1) Take a warm bath. <br> 2) Massage the stinging area. <br> 3) Take a light walk.",
-  ];
-
-  
-  let btnActive = document.querySelectorAll(".symp_btn_remove");
-  let form4d = document.querySelector(".symp_contents_4D");
-  let form4dExcep = document.querySelector(".symp_contents_exception_4D");
-  let sympTitle = document.querySelector(".symp_contents_exception_4D h1");
-  let sympContnets = document.querySelectorAll(
-    ".symp_contents_exception_4D .contents_under p"
+  let btnActive = document.querySelectorAll(".symp_wrap.yes .symp_btn_remove");
+  let form4d = document.querySelector(".symp_wrap.yes .symp_contents_4D");
+  let form4dExcep = document.querySelector(
+    ".symp_wrap.yes .symp_contents_exception_4D"
   );
+  let sympTitle = document.querySelector(
+    ".symp_wrap.yes .symp_contents_exception_4D h2"
+  );
+  let sympContnets = document.querySelectorAll(
+    ".symp_wrap.yes .symp_contents_exception_4D .contents_under p"
+  );
+  console.log(sympContnets);
 
-  for (i = 0; i < btnActive.length; i++) {
-    // 4D가 아닌 요소들에게 적용되는 이벤트들
-    if (i >= 1) {
-      btnActive[i].addEventListener("click", eventExcep4d);
-      function eventExcep4d() {
-        // 버튼 색변경 이벤트
-        for (i = 0; i < btnActive.length; i++) {
-          btnActive[i].classList.remove("active");
+  let title = document.querySelector(".yes .symp_title h1");
+
+  if (title.innerHTML == "금단증상 극복") {
+    for (i = 0; i < btnActive.length; i++) {
+      // 4D가 아닌 요소들에게 적용되는 이벤트들
+      if (i >= 1) {
+        btnActive[i].addEventListener("click", eventExcep4d);
+        function eventExcep4d() {
+          // 버튼 색변경 이벤트
+          for (i = 0; i < btnActive.length; i++) {
+            btnActive[i].classList.remove("active");
+          }
+          this.classList.add("active");
+          //  4D가 아닌 양식을 선택
+          form4d.classList.remove("active");
+          form4dExcep.classList.add("active");
+          // 4D가 아닌 양식에 내용 삽입
+          let idArr = this.id.split("_");
+          let idLastNum = idArr[idArr.length - 1];
+          sympTitle.innerHTML = nameArr[idLastNum];
+          sympContnets[0].innerHTML = symArr[idLastNum];
+          sympContnets[1].innerHTML = methodArr[idLastNum];
         }
-        this.classList.add("active");
-        //  4D가 아닌 양식을 선택
-        form4d.classList.remove("active");
-        form4dExcep.classList.add("active");
-        // 4D가 아닌 양식에 내용 삽입
-        let idArr = this.id.split("_");
-        let idLastNum = idArr[idArr.length - 1];
-        sympTitle.innerHTML = nameArr[idLastNum];
-        sympContnets[0].innerHTML = symArr[idLastNum];
-        sympContnets[1].innerHTML = methodArr[idLastNum];
+      } // 4D 요소에게 적용되는 이벤트들
+      else {
+        btnActive[i].addEventListener("click", event4d);
+        function event4d() {
+          // 버튼 색변경 이벤트
+          for (i = 0; i < btnActive.length; i++) {
+            btnActive[i].classList.remove("active");
+          }
+          this.classList.add("active");
+          //   4D 양식을 선택
+          form4dExcep.classList.remove("active");
+          form4d.classList.add("active");
+        }
       }
-    } // 4D 요소에게 적용되는 이벤트들
-    else {
-      btnActive[i].addEventListener("click", event4d);
-      function event4d() {
-        // 버튼 색변경 이벤트
-        for (i = 0; i < btnActive.length; i++) {
-          btnActive[i].classList.remove("active");
+    }
+  } else {
+    for (i = 0; i < btnActive.length; i++) {
+      // 4D가 아닌 요소들에게 적용되는 이벤트들
+      if (i >= 1) {
+        btnActive[i].addEventListener("click", eventExcep4d);
+        function eventExcep4d() {
+          // 버튼 색변경 이벤트
+          for (i = 0; i < btnActive.length; i++) {
+            btnActive[i].classList.remove("active");
+          }
+          this.classList.add("active");
+          //  4D가 아닌 양식을 선택
+          form4d.classList.remove("active");
+          form4dExcep.classList.add("active");
+          // 4D가 아닌 양식에 내용 삽입
+          let idArr = this.id.split("_");
+          let idLastNum = idArr[idArr.length - 1];
+          sympTitle.innerHTML = nameArrEn[idLastNum];
+          sympContnets[0].innerHTML = symArrEn[idLastNum];
+          sympContnets[1].innerHTML = methodArrEn[idLastNum];
         }
-        this.classList.add("active");
-        //   4D 양식을 선택
-        form4dExcep.classList.remove("active");
-        form4d.classList.add("active");
+      } // 4D 요소에게 적용되는 이벤트들
+      else {
+        btnActive[i].addEventListener("click", event4d);
+        function event4d() {
+          // 버튼 색변경 이벤트
+          for (i = 0; i < btnActive.length; i++) {
+            btnActive[i].classList.remove("active");
+          }
+          this.classList.add("active");
+          //   4D 양식을 선택
+          form4dExcep.classList.remove("active");
+          form4d.classList.add("active");
+        }
       }
     }
   }

@@ -17,7 +17,9 @@ body {
   margin-bottom: 60px;
 }
 #calendar .container {
-  padding: 30px 20px;
+  max-width: 768px;
+  margin: 0 auto;
+  padding: 30px 20px 5px 20px;
 }
 /* ----------title start---------- */
 #calendar .container .title {
@@ -38,9 +40,11 @@ body {
 footer {
   position: fixed;
   bottom: 0;
-  left: 0;
-  z-index: 999;
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: 768px;
   width: 100%;
+  z-index: 999;
   height: 60px;
   display: flex;
   border-top: 1px solid var(--main-color);
@@ -113,7 +117,7 @@ thead tr:last-child {
 }
 .select {
   background: var(--main-color);
-  border-radius: 21px;
+  border-radius: 10px;
   color: #ffffff !important;
 }
 
@@ -125,7 +129,7 @@ thead tr:last-child {
   position: relative;
 }
 .memo .contents .content {
-  width: 90%;
+  width: 100%;
   padding: 5px;
   margin: 5px 0;
   border-radius: 10px;
@@ -170,18 +174,17 @@ thead tr:last-child {
   text-align: center;
   padding: 20px;
 }
-.memo .writeBtn button {
-  width: 36px;
-  height: 36px;
-  border: none;
-  background: none;
-  position: absolute;
-  right: 5px;
-  bottom: 5px;
+.memo .writeBtn {
+  margin-top: 10px;
 }
-.memo .writeBtn button img {
+.memo .writeBtn button {
   width: 100%;
-  height: 100%;
+  height: 36px;
+  border-radius: 10px;
+  border: none;
+  background: var(--main-color);
+  font-size: 18px;
+  color: #fff;
 }
 
 /*  */
@@ -204,10 +207,11 @@ thead tr:last-child {
   transition: height 0.5s;
 }
 .writePopup.active {
-  height: 80%;
+  height: 90%;
 }
 /*  title  */
-.writePopup .title {
+.writePopup .titles {
+  margin-top: 10px;
   width: 100%;
   height: 96px;
   position: relative;
@@ -215,7 +219,7 @@ thead tr:last-child {
   justify-content: center;
   align-items: center;
 }
-.writePopup .title .closeBtn {
+.writePopup .titles .closeBtn {
   width: 36px;
   height: 36px;
   position: absolute;
@@ -223,12 +227,12 @@ thead tr:last-child {
   right: 20px;
   transform: translateY(-50%);
 }
-.writePopup .title .closeBtn > img {
+.writePopup .titles .closeBtn > img {
   width: 100%;
   height: 100%;
 }
 
-.writePopup .title h1 {
+.writePopup .titles h1 {
   font-weight: 400;
   font-size: 36px;
 }
@@ -375,4 +379,17 @@ thead tr:last-child {
 }
 .memoDate:focus {
   outline: none;
+}
+.delete form button {
+  border: none;
+  background: red;
+  width: 25px;
+  padding: 15px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+}
+.delete form button img {
+  filter: invert(100%);
 }

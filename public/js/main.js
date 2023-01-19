@@ -152,13 +152,15 @@ function showCalendar() {
           // 메모 정보 배열로 만들기
           let newMemoArr = [...data].filter((e) => e[memoDay]);
           // 메모 입력 박스
+
           let memoBox = document.querySelector(".memo .contents");
+
           // 메모 정보가 있다면
           if (newMemoArr.length > 0) {
             // 기본 메모 박스는 빈값
             memoBox.innerHTML = "";
             // 메모 박스에 메모 정보 배열값을 각각 넣기
-            newMemoArr.forEach((e) => {
+            newMemoArr.forEach((e, i) => {
               memoBox.innerHTML += `
               <div class="content">
                 <div class="emotion"><img src="./images/emotion${e[memoDay][0].감정}.png" /></div>
@@ -169,12 +171,18 @@ function showCalendar() {
                   </div>
                   <div class="sub2"><p>${e[memoDay][0].내용}</p></div>
                 </div>
+                <div class="delete"><form action="memoDelete/${memoDay}/${i}" method="post"><button><img src="./images/mdi_trash-can-outline.png" alt="delete"/></button></form></div>
               </div>
               `;
             });
           } else {
             // 메모 정보가 없다면 출력할 메세지
-            memoBox.innerHTML = `<div class="content"><p class="text">메모를 입력해주세요</p></div>`;
+            let kortitle = document.querySelector(".kortitle");
+            if (kortitle.classList.contains("yes")) {
+              memoBox.innerHTML = `<div class="content"><p class="text">Please Enter Memo</p></div>`;
+            } else {
+              memoBox.innerHTML = `<div class="content"><p class="text">메모를 입력해주세요</p></div>`;
+            }
           }
         });
     });
@@ -217,9 +225,9 @@ function showCalendar() {
         // 만약 데이터 상의 날짜가 존재하고  테이블 상의 날짜가 일치하면 정보가 있는 테이블의 날짜에 스타일 추가
         if (strokeYear == calendarYear && strokeMonth == calendarMonth) {
           let stroke = document.getElementById(`${strokeDay}`);
-          stroke.style.borderBottom = "1px solid #000";
-          stroke.style.borderRadius = "50%";
-          stroke.style.boxShadow = "1px 1px 4px rgba(0,0,0,0.2)";
+          stroke.style.borderBottom = "1px solid #1fab89";
+          stroke.style.borderRadius = "10px";
+          stroke.style.boxShadow = "1px 1px 4px #1fab896e";
         }
       });
     });
