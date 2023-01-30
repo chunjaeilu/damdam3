@@ -177,7 +177,7 @@ fs.writeFileSync("achieveDBv2.json", JSON.stringify(test));
         "date" : "2023-01-16",
        }
      ]
-   }
+   } 
 ]
 ``` 
 - 업적 josn 파일에서 `condition`에 맞는 조건을 계산해서 조건과 계산값이 일치(달성)하면 `date` property value를 달성 날짜로 추가
@@ -397,4 +397,6 @@ app.post("/memoDelete/:day/:id", (req, res) => {
 ## Complementary
 - Community site link 페이지 이동 > target _blank
 - Calendar 메모 작성 input value로 변경해서 즉시 수정 
-- 사용자 정보 local storage에 
+- 사용자 정보 local storage에 저장
+- 버튼 전체 클릭 이벤트로 변경하기
+- 단계 선택자 변경
